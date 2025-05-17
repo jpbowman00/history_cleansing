@@ -1,0 +1,5 @@
+Package: history_cleansing
+Type: Package
+Title: History cleansing for nonnegative integer-valued series with long runs of zeros
+Version: 0.0.1.0
+RoxygenNote: 7.3.2
