@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean.R
 \name{clean}
 \alias{clean}
-\title{History cleansing}
+\title{clean}
 \usage{
 clean(x, cutoff = 0.999, randomize = FALSE, method = na_interpolation)
 }
@@ -16,7 +16,7 @@ clean(x, cutoff = 0.999, randomize = FALSE, method = na_interpolation)
 \item{method}{The  method used to calculate replacement values}
 }
 \value{
-The vector with values replaced
+A vector with values replaced
 }
 \description{
 Identify and replace outliers, including NAs and long runs of zero values,
