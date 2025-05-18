@@ -10,8 +10,13 @@
 #' Otherwise, data transformed before model is estimated. Pass-through to tsoutliers.
 #' ... Other parameters to be passed to method
 #' @param method See imputeTS documentation for interpolation methods
+#' @return  A vector with outliers replaced by imputed values
 
-tsclean2 <- function (x, replace.missing = TRUE, iterate = 2, lambda = NULL, method = na_interpolation, ...) 
+tsclean2 <- function (x, 
+											replace.missing = TRUE, 
+											iterate = 2, 
+											lambda = NULL, 
+											method = na_interpolation, ...) 
 {
 	require(forecast)
 	require(imputeTS)
@@ -32,6 +37,7 @@ tsclean2 <- function (x, replace.missing = TRUE, iterate = 2, lambda = NULL, met
 #' @param cutoff  The cutoff p-value used to identify "too long" a run of zero values
 #' @param randomize   Randomize the replacement values (using a Poisson dist'n)
 #' @param method  The  method used to calculate replacement values
+#' @param nonnegative_only TRUE if negative return values replaced by zeros
 #' @return A vector with values replaced
 #' @examples 
 #' x <- rpois(50,5)
@@ -40,7 +46,11 @@ tsclean2 <- function (x, replace.missing = TRUE, iterate = 2, lambda = NULL, met
 #' print(z[31:35])
 #' @export
 
-clean <- function(x, cutoff = 0.999, randomize = FALSE, method = na_interpolation) {
+clean <- function(x, 
+									cutoff = 0.999, 
+									randomize = FALSE, 
+									method = na_interpolation,
+									nonnegative_only = TRUE) {
 	
 	require(tseries)
 	
@@ -70,5 +80,8 @@ clean <- function(x, cutoff = 0.999, randomize = FALSE, method = na_interpolatio
 		}
 	}
 	
-	round(z)
+	if (nonnegative_only) {
+		return(pmax(0,round(z)))
+	} 
+	return(round(z))
 }
