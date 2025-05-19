@@ -1,5 +1,21 @@
-Package: history_cleansing
+Package: historyCleansing
 Type: Package
 Title: History cleansing for nonnegative integer-valued series with long runs of zeros
+Description: An extension of the `tsclean` functionality in the `forecast` package.  
+  The motivation for this package is a situation that arises frequently wih retail
+  sales data, where a supply shortage can lead to several consecutive periods of zero sales 
+  that should not affect the ongoing forecasts.  If demands are high these can be readily
+  identified by standard algorithms, but, if demands are low, they can easily pass
+  outlier checks.  We look at the lengths of runs of zeros as well as the frequency
+  of zeros to identify this type of outlier.
+Authors@R: person("John", "Bowman", email = "jpbowmanathome@sprynet.com",
+  role = c("aut", "cre"))
 Version: 0.0.1.0
+Imports:
+	imputeTS,
+	forecast,
+	tseries
+Encoding: UTF-8
 RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)
+License: GPL (>= 3)

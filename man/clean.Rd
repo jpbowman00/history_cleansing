@@ -4,7 +4,13 @@
 \alias{clean}
 \title{clean}
 \usage{
-clean(x, cutoff = 0.999, randomize = FALSE, method = na_interpolation)
+clean(
+  x,
+  cutoff = 0.999,
+  randomize = FALSE,
+  method = na_kalman,
+  nonnegative_only = TRUE
+)
 }
 \arguments{
 \item{x}{The vector to be cleansed}
@@ -13,7 +19,21 @@ clean(x, cutoff = 0.999, randomize = FALSE, method = na_interpolation)
 
 \item{randomize}{Randomize the replacement values (using a Poisson dist'n)}
 
-\item{method}{The  method used to calculate replacement values}
+\item{method}{The method used to calculate replacement values (provided by imputeTS):
+\tabular{lll}{
+\tab na_kalman \tab Missing Value Imputation by Kalman Smoothing and State Space Models  (default) \cr
+\tab na_interpolation \tab Missing Value Imputation by Interpolation \cr
+\tab na_locf \tab Missing Value Imputation by Last Observation Carried Forward \cr
+\tab na_ma \tab Missing Value Imputation by Weighted Moving Average \cr
+\tab na_mean \tab Missing Value Imputation by Mean Value \cr
+\tab na_random \tab Missing Value Imputation by Random Sample \cr
+\tab na_remove \tab Remove Missing Values \cr
+\tab na_replace \tab Replace Missing Values by a Defined Value \cr
+\tab na_seadec \tab Seasonally Decomposed Missing Value Imputation \cr
+\tab na_seasplit \tab Seasonally Splitted Missing Value Imputation \cr
+}}
+
+\item{nonnegative_only}{TRUE if negative return values replaced by zeros}
 }
 \value{
 A vector with values replaced
@@ -23,8 +43,15 @@ Identify and replace outliers, including NAs and long runs of zero values,
 in an integer-valued time series
 }
 \examples{
+library(tseries)
+library(forecast)
+library(imputeTS)
+
 x <- rpois(50,5)
 x[31:35] <- 0
-z <- clean(x, method = na_kalman, randomize=TRUE)
+z <- clean(x, randomize=TRUE)
 print(z[31:35])
+}
+\seealso{
+\code{\link[forecast:tsoutliers]{tsoutliers}}
 }
